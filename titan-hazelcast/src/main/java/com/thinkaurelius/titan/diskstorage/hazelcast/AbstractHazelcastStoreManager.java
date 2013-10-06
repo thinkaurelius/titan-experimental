@@ -33,11 +33,11 @@ public abstract class AbstractHazelcastStoreManager extends LocalStoreManager im
     }
 
     @Override
-    public StoreTransaction beginTransaction(ConsistencyLevel consistencyLevel) throws StorageException {
+    public StoreTransaction beginTransaction(StoreTxConfig txConfig) throws StorageException {
         if (transactional) {
-            return new HazelCastTransaction(manager.newTransactionContext(TransactionOptions.getDefault()), consistencyLevel);
+            return new HazelCastTransaction(manager.newTransactionContext(TransactionOptions.getDefault()), txConfig);
         } else {
-            return new NoOpStoreTransaction(consistencyLevel);
+            return new NoOpStoreTransaction(txConfig);
         }
     }
 
@@ -64,7 +64,8 @@ public abstract class AbstractHazelcastStoreManager extends LocalStoreManager im
     private StoreFeatures getDefaultFeatures() {
         StoreFeatures features = new StoreFeatures();
 
-        features.supportsScan = true;
+        features.supportsOrderedScan = false; // TODO ?
+        features.supportsUnorderedScan = true;
         features.supportsBatchMutation = false;
 
         features.supportsTransactions = true;
@@ -81,8 +82,8 @@ public abstract class AbstractHazelcastStoreManager extends LocalStoreManager im
     private static class HazelCastTransaction extends AbstractStoreTransaction {
         private final TransactionContext context;
 
-        public HazelCastTransaction(TransactionContext context, ConsistencyLevel consistencyLevel) {
-            super(consistencyLevel);
+        public HazelCastTransaction(TransactionContext context, StoreTxConfig txConfig) {
+            super(txConfig);
 
             this.context = context;
             this.context.beginTransaction();

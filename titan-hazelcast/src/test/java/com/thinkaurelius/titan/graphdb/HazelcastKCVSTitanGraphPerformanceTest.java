@@ -3,7 +3,7 @@ package com.thinkaurelius.titan.graphdb;
 import com.thinkaurelius.titan.HazelcastStorageSetup;
 import com.thinkaurelius.titan.diskstorage.StorageException;
 
-public class HazelcastKCVSTitanGraphPerformanceTest extends TitanGraphPerformanceTest {
+public class HazelcastKCVSTitanGraphPerformanceTest extends TitanGraphPerformanceMemoryTest {
 
     public HazelcastKCVSTitanGraphPerformanceTest() {
         super(HazelcastStorageSetup.getHazelcastKCVSGraphConfig(false));

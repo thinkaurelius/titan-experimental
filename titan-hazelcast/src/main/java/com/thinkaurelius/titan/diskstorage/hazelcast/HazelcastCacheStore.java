@@ -79,19 +79,24 @@ public class HazelcastCacheStore implements CacheStore {
 
         return new RecordIterator<KeyValueEntry>() {
             @Override
-            public boolean hasNext() throws StorageException {
+            public boolean hasNext() {
                 return keys.hasNext();
             }
 
             @Override
-            public KeyValueEntry next() throws StorageException {
+            public KeyValueEntry next() {
                 byte[] key = keys.next();
                 return new KeyValueEntry(new StaticArrayBuffer(key), new StaticArrayBuffer(cache.get(key)));
             }
 
             @Override
-            public void close() throws StorageException {
+            public void close() {
                 // nothing to do
+            }
+
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException();
             }
         };
     }

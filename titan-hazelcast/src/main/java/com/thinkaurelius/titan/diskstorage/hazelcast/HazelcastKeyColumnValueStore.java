@@ -252,13 +252,13 @@ public class HazelcastKeyColumnValueStore implements KeyColumnValueStore {
 
                 @Override
 
-                public boolean hasNext() throws StorageException {
+                public boolean hasNext() {
                     ensureOpen();
                     return columns.hasNext();
                 }
 
                 @Override
-                public Entry next() throws StorageException {
+                public Entry next() {
                     ensureOpen();
                     Column column = columns.next();
                     count++;
@@ -266,20 +266,25 @@ public class HazelcastKeyColumnValueStore implements KeyColumnValueStore {
                 }
 
                 @Override
-                public void close() throws StorageException {
+                public void close() {
                     // nothing to do here
+                }
+
+                @Override
+                public void remove() {
+                    throw new UnsupportedOperationException();
                 }
             };
         }
 
         @Override
-        public boolean hasNext() throws StorageException {
+        public boolean hasNext() {
             ensureOpen();
             return keys.hasNext();
         }
 
         @Override
-        public StaticBuffer next() throws StorageException {
+        public StaticBuffer next() {
             ensureOpen();
 
             currentKey = keys.next();
@@ -287,13 +292,18 @@ public class HazelcastKeyColumnValueStore implements KeyColumnValueStore {
         }
 
         @Override
-        public void close() throws StorageException {
+        public void close() {
             isClosed = true;
         }
 
         private void ensureOpen() {
             if (isClosed)
                 throw new IllegalStateException("iterator is closed.");
+        }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException();
         }
     }
 }

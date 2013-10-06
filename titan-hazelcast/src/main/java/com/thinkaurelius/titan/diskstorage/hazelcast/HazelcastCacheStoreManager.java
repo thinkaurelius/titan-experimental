@@ -4,8 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.thinkaurelius.titan.diskstorage.StorageException;
+import com.thinkaurelius.titan.diskstorage.keycolumnvalue.StoreTransaction;
+import com.thinkaurelius.titan.diskstorage.keycolumnvalue.StoreTxConfig;
 import com.thinkaurelius.titan.diskstorage.keycolumnvalue.keyvalue.CacheStore;
 import com.thinkaurelius.titan.diskstorage.keycolumnvalue.keyvalue.CacheStoreManager;
+
 import org.apache.commons.configuration.Configuration;
 
 public class HazelcastCacheStoreManager extends AbstractHazelcastStoreManager implements CacheStoreManager {
