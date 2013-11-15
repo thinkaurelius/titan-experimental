@@ -1,0 +1,11 @@
+*.log
+target/
+.idea/
+/titan-*/.classpath
+/titan-*/.project
+/titan-*/.settings/
+# Backup files created by `mvn versions:update-child-modules`
+# http://mojo.codehaus.org/versions-maven-plugin/update-child-modules-mojo.html
+titan-*/pom.xml.versionsBackup
+# JUnitBenchmarks output
+/titan-*/jub.*.xml
